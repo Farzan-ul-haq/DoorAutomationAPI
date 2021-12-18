@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+import django_heroku
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-#m6q4h8@@sk^20b@2i=k)y9gzu)@xmgvg6rx$#@vzhq1!109!)'
@@ -19,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rest_framework',
+
+    'corsheaders',
     
     'core.apps.CoreConfig',
 ]
@@ -31,6 +36,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
@@ -100,6 +106,9 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-import dj_database_url
+django_heroku.settings(locals())
+
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+CORS_ORIGIN_ALLOW_ALL = True
