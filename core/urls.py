@@ -4,9 +4,24 @@ from . import views
 
 
 urlpatterns = [
-    path('door/', views.DoorListView.as_view()),
-    path('door/<int:id>/', views.DoorDetailView.as_view()),
-    path('door/<int:id>/password/', views.DoorPassword.as_view()),
-    path('door/<int:id>/open/',views.OpenDoor.as_view()),
-    path('door/<int:id>/close/',views.CloseDoor.as_view()),
+    path(
+        'door/<int:id>/',
+        views.DoorDetailView.as_view(),
+        name='door-api-detail'
+    ),
+    path(
+        'door/',
+        views.DoorListView.as_view(),
+        name='door-list'    
+    ),
+    path(
+        'door/<int:id>/password/', 
+        views.DoorPasswordView.as_view(),
+        name='door-password'    
+    ),
+    path(
+        'door/<int:id>/status/',
+        views.DoorStatusView.as_view(),
+        name='door-status'
+    ),
 ]

@@ -1,0 +1,6 @@
+<h1> Door List </h1>
+<ul>
+    {%for door in doors %}
+        <li><a href='{{door.get_absolute_url}}'>{{door.name}}</a></li>
+    {% endfor %}
+</ul>
