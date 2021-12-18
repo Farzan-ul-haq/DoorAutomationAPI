@@ -1,7 +1,7 @@
-from typing import List
+from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
-from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -46,11 +46,13 @@ class DoorPasswordView(View):
             })
 
 
-class DoorStatusView(View):
+class DoorStatusView(LoginRequiredMixin, View):
     template = 'door/status.html'
 
     def get(self, request, id):
         door = get_door(id)
+        if request.user not in door.users.all():
+            return redirect('door-password', id)
         return render(request, self.template, {
             'door': door
         })
@@ -66,3 +68,4 @@ class DoorStatusView(View):
         return render(request, self.template, {
             'door': door
         })
+
