@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+
+from core.utils.cryptography import encryption, decryption
 # Create your models here.
 
 class Door(models.Model):
@@ -23,4 +25,11 @@ class Door(models.Model):
             'id': self.id
         })
 
-    
+    def save(self, *args, **kwargs):
+        self.password = encryption(self.password)
+        super(Door, self).save(*args, **kwargs)
+
+    def check_password(self, password):
+        """check password is true"""
+        return password == decryption(self.password)
+

@@ -115,3 +115,5 @@ LOGIN_URL = '/auth/login/'
 
 LOGIN_REDIRECT_URL = '/door/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
+
+CIPHER_KEY = 15

@@ -36,7 +36,7 @@ class DoorPasswordView(View):
     def post(self, request, id):
         door = get_door(id)
         password = request.POST.get('password')
-        if password == door.password:
+        if door.check_password(password):
             door.users.add(request.user.id)
             return redirect('door-status', id)
         else:
